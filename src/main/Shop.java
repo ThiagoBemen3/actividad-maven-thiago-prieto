@@ -36,6 +36,7 @@ public class Shop {
 	}
 	
 	
+	
 
 	public Amount getCash() {
 		return cash;
