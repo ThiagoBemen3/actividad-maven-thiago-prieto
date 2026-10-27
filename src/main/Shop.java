@@ -228,6 +228,10 @@ public class Shop {
 				System.out.println(line);
 				
 				Product product = parseProductLine(line);
+				if (product == null) {
+				    System.out.println("Error al fitxer items.txt");
+				    System.exit(1);
+				}
 		            inventory.add(product);
 			}
 		} catch (IOException e) {
