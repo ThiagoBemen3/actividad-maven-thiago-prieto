@@ -226,6 +226,9 @@ public class Shop {
 			
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
+				
+				Product product = parseProductLine(line);
+		            inventory.add(product);
 			}
 		} catch (IOException e) {
 			System.out.println("Error llegint el fitxer");
@@ -240,9 +243,14 @@ public class Shop {
 	 * Convert a valid line from items.txt into a Product.
 	 */
 	private Product parseProductLine(String line) {
-		// TODO RA1-ISSUE-04: validar camps, convertir preu i estoc, i retornar un Product.
-		// TODO RA1-ISSUE-05: decidir com es tracten les linies mal formades.
-		return null;
+
+	    String[] parts = line.split(";");
+
+	    String name = parts[0].split(":")[1];
+	    double price = Double.parseDouble(parts[1].split(":")[1]);
+	    int stock = Integer.parseInt(parts[2].split(":")[1]);
+
+	    return new Product(name, new Amount(price), true, stock);
 	}
 
 	/**
