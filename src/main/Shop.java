@@ -221,7 +221,15 @@ public class Shop {
 	 */
 	private void readInventory() {
 		File f = new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + ITEMS_FILE);
-
+		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+			String line;
+			
+			while ((line = br.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (IOException e) {
+			System.out.println("Error llegint el fitxer");
+		}
 		// TODO RA1-ISSUE-03: obrir el fitxer, llegir-lo linia a linia i afegir cada producte a inventory.
 		// TODO RA1-ISSUE-04: delegar la conversio de cada linia a parseProductLine.
 		// TODO RA1-ISSUE-11: tractar fitxer absent o error de lectura amb un missatge comprensible.
