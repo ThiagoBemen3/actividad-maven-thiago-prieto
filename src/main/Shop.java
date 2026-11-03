@@ -229,8 +229,8 @@ public class Shop {
 				
 				Product product = parseProductLine(line);
 				if (product == null) {
-				    System.out.println("Error al fitxer items.txt");
-				    System.exit(1);
+				    System.out.println("Línia mal formada a items.txt, s'ignora: " + line);
+				    continue;
 				}
 		            inventory.add(product);
 			}
@@ -248,13 +248,17 @@ public class Shop {
 	 */
 	private Product parseProductLine(String line) {
 
-	    String[] parts = line.split(";");
+	    try {
+	        String[] parts = line.split(";");
 
-	    String name = parts[0].split(":")[1];
-	    double price = Double.parseDouble(parts[1].split(":")[1]);
-	    int stock = Integer.parseInt(parts[2].split(":")[1]);
+	        String name = parts[0].split(":")[1];
+	        double price = Double.parseDouble(parts[1].split(":")[1]);
+	        int stock = Integer.parseInt(parts[2].split(":")[1]);
 
-	    return new Product(name, new Amount(price), true, stock);
+	        return new Product(name, new Amount(price), true, stock);
+	    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+	        return null;
+	    }
 	}
 
 	/**
