@@ -276,8 +276,54 @@ public class Shop {
 	 * add a new product to inventory getting data from console
 	 */
 	public void addProduct() {
-		// TODO RA1-ISSUE-06: demanar dades minimes, crear un Product i afegir-lo a inventory.
-		System.out.println("RA1-ISSUE-06 pendent: encara no es poden afegir articles.");
+		if (isInventoryFull()) {
+			System.out.println("No es poden afegir més articles, s'ha assolit el màxim de " + inventory.size());
+			return;
+		}
+
+		Scanner scanner = CONSOLE;
+		scanner.nextLine();
+
+		System.out.print("Nom de l'article: ");
+		String name = scanner.nextLine().trim();
+		if (name.isEmpty()) {
+			System.out.println("El nom no pot estar buit");
+			return;
+		}
+		if (findProduct(name) != null) {
+			System.out.println("L'article " + name + " ja existeix");
+			return;
+		}
+
+		System.out.print("Preu majorista: ");
+		double price;
+		try {
+			price = Double.parseDouble(scanner.nextLine().trim().replace(",", "."));
+		} catch (NumberFormatException e) {
+			System.out.println("El preu ha de ser un número");
+			return;
+		}
+		if (price <= 0) {
+			System.out.println("El preu ha de ser més gran que 0");
+			return;
+		}
+
+		System.out.print("Estoc: ");
+		int stock;
+		try {
+			stock = Integer.parseInt(scanner.nextLine().trim());
+		} catch (NumberFormatException e) {
+			System.out.println("L'estoc ha de ser un número enter");
+			return;
+		}
+		if (stock < 0) {
+			System.out.println("L'estoc no pot ser negatiu");
+			return;
+		}
+
+		Product product = new Product(name, new Amount(price), stock > 0, stock);
+		addProduct(product);
+		System.out.println("Article afegit: " + product);
 	}
 
 	/**
