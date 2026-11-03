@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Shop {
@@ -265,8 +266,16 @@ public class Shop {
 	 * Save the current inventory to items.txt.
 	 */
 	public void saveInventory() {
-		// TODO RA1-ISSUE-09: convertir cada Product en una linia i reescriure items.txt.
-		System.out.println("RA1-ISSUE-09 pendent: encara no s'ha desat l'inventari.");
+		File f = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "model" + File.separator + "files" + File.separator + ITEMS_FILE);
+		try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
+			for (Product product : inventory) {
+				String price = String.format(Locale.ROOT, "%.2f", product.getWholesalerPrice().getValue());
+				pw.println("Item:" + product.getName() + ";Wholesaler Price:" + price + ";Stock:" + product.getStock() + ";");
+			}
+			System.out.println("Inventari desat a " + f.getPath());
+		} catch (IOException e) {
+			System.out.println("Error desant el fitxer");
+		}
 	}
 
 	/**
