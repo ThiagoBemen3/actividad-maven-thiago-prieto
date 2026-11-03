@@ -220,7 +220,7 @@ public class Shop {
 	 * read inventory from file
 	 */
 	private void readInventory() {
-		File f = new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + ITEMS_FILE);
+		File f = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "model" + File.separator + "files" + File.separator + ITEMS_FILE);
 		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
 			String line;
 			
